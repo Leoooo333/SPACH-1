@@ -178,11 +178,7 @@ def get_args_parser():
     # spach parameters
     parser.add_argument('--stem-type', default='conv1', type=str, choices=['conv1', 'conv4'])
     parser.add_argument('--shared-spatial-func', action='store_true')
-<<<<<<< Updated upstream
-
-=======
     
->>>>>>> Stashed changes
     # parameters for benchmark
     parser.add_argument('--throughput', action='store_true')
     return parser
@@ -403,7 +399,7 @@ def main(args):
                 utils._load_checkpoint_for_ema(model_ema, checkpoint['model_ema'])
 
     if args.eval:
-        test_stats = evaluate(data_loader_val, model, device, logger=logger)
+        test_stats = evaluate(data_loader_val, model, device, args.batch_size, logger=logger)
         logger.info(f"Accuracy of the network on the {len(dataset_val)} test images: {test_stats['acc1']:.1f}%")
         return
 
