@@ -21,7 +21,8 @@ import apex.amp
 
 def train_one_epoch(model: torch.nn.Module, criterion: DistillationLoss,
                     data_loader: Iterable, optimizer: torch.optim.Optimizer,
-                    device: torch.device, epoch: int, output_dir: str, max_norm: float = 0,
+                    device: torch.device, epoch: int, output_dir: str, batch_size: int,
+                    max_norm: float = 0,
                     model_ema: Optional[ModelEma] = None, mixup_fn: Optional[Mixup] = None,
                     set_training_mode=True, logger=logging):
     model.train(set_training_mode)
@@ -32,7 +33,11 @@ def train_one_epoch(model: torch.nn.Module, criterion: DistillationLoss,
 
     
     with torch.autograd.profiler.profile(use_cuda=True) as prof:
+<<<<<<< Updated upstream
         for samples, targets in metric_logger.log_every(data_loader, print_freq, header):
+=======
+        for samples, targets in metric_logger.log_every(data_loader, print_freq, batch_size, header):
+>>>>>>> Stashed changes
             samples = samples.to(device, non_blocking=True)
             targets = targets.to(device, non_blocking=True)
 
@@ -81,7 +86,11 @@ def evaluate(data_loader, model, device, logger=logging):
     # switch to evaluation mode
     model.eval()
 
+<<<<<<< Updated upstream
     for images, target in metric_logger.log_every(data_loader, 10, header):
+=======
+    for images, target in metric_logger.log_every(data_loader, 10, batch_size, header):
+>>>>>>> Stashed changes
         images = images.to(device, non_blocking=True)
         target = target.to(device, non_blocking=True)
 

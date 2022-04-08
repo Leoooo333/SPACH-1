@@ -178,7 +178,11 @@ def get_args_parser():
     # spach parameters
     parser.add_argument('--stem-type', default='conv1', type=str, choices=['conv1', 'conv4'])
     parser.add_argument('--shared-spatial-func', action='store_true')
+<<<<<<< Updated upstream
 
+=======
+    
+>>>>>>> Stashed changes
     # parameters for benchmark
     parser.add_argument('--throughput', action='store_true')
     return parser
@@ -416,7 +420,7 @@ def main(args):
 
         train_stats = train_one_epoch(
             model, criterion, data_loader_train,
-            optimizer, device, epoch, args.output_dir,
+            optimizer, device, epoch, args.output_dir, args.batch_size,
             args.clip_grad, model_ema, mixup_fn,
             set_training_mode=args.finetune == '',  # keep in eval mode during finetuning
             logger=logger

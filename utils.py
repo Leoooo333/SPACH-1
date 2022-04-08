@@ -114,7 +114,11 @@ class MetricLogger(object):
     def add_meter(self, name, meter):
         self.meters[name] = meter
 
+<<<<<<< Updated upstream
     def log_every(self, iterable, print_freq, header=None):
+=======
+    def log_every(self, iterable, print_freq, batch_size, header=None):
+>>>>>>> Stashed changes
         i = 0
         if not header:
             header = ''
@@ -160,7 +164,7 @@ class MetricLogger(object):
         self.logger.info('{} Total time: {} ({:.4f} s / it)'.format(
             header, total_time_str, total_time / len(iterable)))
         self.logger.info('{} FPS: {} ({:.4f} s / it)'.format(
-            header, args.batch_size * get_world_size() / total_time, total_time / len(iterable)))
+            header, batch_size * get_world_size() / total_time, total_time / len(iterable)))
 
 
 def _load_checkpoint_for_ema(model_ema, checkpoint):
@@ -237,7 +241,10 @@ def init_distributed_mode(args):
         return
 
     args.distributed = True
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     torch.cuda.set_device(args.gpu)
     args.dist_backend = 'nccl'
     print('| distributed init (rank {}): {}'.format(
