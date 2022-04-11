@@ -119,6 +119,7 @@ class MetricLogger(object):
         if not header:
             header = ''
         start_time = time.time()
+        skip_pre_time = time.time()
         end = time.time()
         iter_time = SmoothedValue(fmt='{avg:.4f}')
         data_time = SmoothedValue(fmt='{avg:.4f}')
@@ -135,7 +136,9 @@ class MetricLogger(object):
             log_msg.append('max mem: {memory:.0f}')
         log_msg = self.delimiter.join(log_msg)
         MB = 1024.0 * 1024.0
-        for obj in iterable:
+        for i, obj in enumerate(iterable):
+            if i == 3:
+                skip_pre_time = time.time()
             data_time.update(time.time() - end)
             yield obj
             iter_time.update(time.time() - end)
@@ -156,11 +159,12 @@ class MetricLogger(object):
             i += 1
             end = time.time()
         total_time = time.time() - start_time
+        FPS_valid_time = time.time() - skip_pre_time
         total_time_str = str(datetime.timedelta(seconds=int(total_time)))
         self.logger.info('{} Total time: {} ({:.4f} s / it)'.format(
             header, total_time_str, total_time / len(iterable)))
         self.logger.info('{} FPS: {} ({:.4f} s / it)'.format(
-            header, batch_size * get_world_size() / total_time, total_time / len(iterable)))
+            header, batch_size * get_world_size() / FPS_valid_time, FPS_valid_time / len(iterable)))
 
 
 def _load_checkpoint_for_ema(model_ema, checkpoint):
