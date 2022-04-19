@@ -43,7 +43,7 @@ To enable NPU, use parser argument
 First, clone the repo and install requirements:
 
 ```bash
-git clone https://github.com/microsoft/Spach
+git clone https://github.com/Leoooo333/SPACH-1
 ```
 
 + install requirement
